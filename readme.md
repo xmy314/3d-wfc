@@ -68,14 +68,12 @@ visualizing profiling result with:
 ```
 
 ## other stuff:
+todo:
 symmetry_generation_2 doesn't work.
 
-this currently have a three step look ahead baked in.
+idea:
+this currently have a three step look ahead baked in. this reduces the number of back propagation to extremely low, but it also couldn't really be sped fast or to apply alpha beta trimming. maybe another way that focuses on using back propagation would be more valuable?
 
-updating constraints whenever something changes is a step look ahead.
-checkvalidity is one step look ahead when that is present.
-propagate uses check validity is another step look ahead.
+    yes, this is indeed True as I don't need to get a good answer under some constraints, and only need an answer.
+    after little testing, some lookup ahead prevents from going to deep into a deadend.
 
-this reduces the number of back propagation to extremely low, but it also couldn't really be sped fast or to apply alpha beta trimming.
-
-maybe another way that focuses on using back propagation would be more valuable?

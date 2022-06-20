@@ -50,6 +50,8 @@ def propagate(arena,constraints,all_structure_set,position,choosen_structure):
         if not position in arena:
             arena[position]=all_structure_set.copy()
 
+        new_to_set=False
+
         for structure in arena[position]:
             if checkValidity(arena,constraints,position,structure,change):
                 # still valid, doesn't need to be removed
@@ -59,6 +61,7 @@ def propagate(arena,constraints,all_structure_set,position,choosen_structure):
             if not position in change:
                 change[position]=set()
             change[position].add(structure)
+            new_to_set=True
 
             # since the information of this position changed, 
             # all positions that may depend on the invalidated structure 
@@ -68,7 +71,7 @@ def propagate(arena,constraints,all_structure_set,position,choosen_structure):
                 if not n_position in to_be_updated:
                     to_be_updated.add(n_position)
                     
-        if position in change:
+        if new_to_set:
             arena[position].difference_update(change[position])
 
             # if no possibility is valid at the block, return false
@@ -146,7 +149,7 @@ def extendConstraints(raw_constraints,all_structure_set,origin):
 
 def roll_back(arena,change_record,step_record):
     while True:
-        if len(change_record)==0:
+        if len(change_record)==1:
             print("rolling back further than history allows")
             raise Exception
 
@@ -158,6 +161,7 @@ def roll_back(arena,change_record,step_record):
         roll_back_position,roll_back_selection = step_record.pop()
 
         arena[roll_back_position].remove(roll_back_selection)
+        print("roll-back")
         if len(arena[roll_back_position])!=0:
             return
 
