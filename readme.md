@@ -3,8 +3,8 @@
 ## how to add new modules:
 Each module is bounded by an axis aligned cube that range from ════0.5 to 0.5 on each axis.
 Faces for modules in 3d modules need to be manually identified and labelled in the file name.
-The entire file name is: `{face}════{face}════{face}════{face}════{face}════{face}.obj`
-Each face is represented with: `{name}{state}`
+The entire file name is: `{face}-{face}-{face}-{face}-{face}-{face}.obj`.
+Each face is represented with: `{name}{state}`.
 
 The name of the face can be any combination of english alphabets and is case sensitive.
 
@@ -28,9 +28,10 @@ o═══╗
          
           
 then:
+
 orientation｜state number
 ---------｜---
-o═══╗    ｜0
+o═══╗    ｜0(optional)
     ║    ｜
     ║    ｜
          ｜
@@ -78,7 +79,8 @@ o        ｜7
         ║｜
         ║｜
 
-each face may also be symmetric in some way, below is an look up table
+Each face may also be symmetric in some way, below is an look up table. This need to be configured in mainv3.
+
 orientation｜state number
 ---------｜---
 o═══╗    ｜no_symmetry
@@ -88,7 +90,7 @@ o═══╗    ｜no_symmetry
          ｜
 ---------｜---
 ════╗   ║｜rot_by_four_fold
-    ║   ║｜(please don't cancel me)
+    ║   ║｜please don't cancel me)(
 ╔═══╬═══╝｜(this is not the symbol)
 ║   ║    ｜
 ║   ╚════｜
