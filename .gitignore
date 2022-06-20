@@ -1,0 +1,11 @@
+__pycache__/
+.vscode/
+debug/
+wfcenv/
+output/
+.DS_Store
+*.mp4
+*.png
+*.obj
+log.txt
+*.pkl
