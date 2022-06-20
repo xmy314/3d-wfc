@@ -23,35 +23,35 @@ The third lowest bit is reflection and fliping all the bits is reflection along 
 
 eg:
 In case when a face is like the folloing where "o" is the origin.
-`o═══╗    \    ║    \    ║    \         \         \`
+`o═══╗    <br />    ║    <br />    ║    <br />         <br />         <br />`
 
 the orientation and state number can be seen from the following
 
 orientation|state number
 ---------|---
-`o═══╗    \    ║    \    ║    \         \         `|0(optional)
-`o       ║\        ║\    ════╝\         \         `|1
-`o        \         \    ║    \    ║    \    ╚════`|2
-`o        \         \╔════    \║        \║        `|3
-`o        \         \    ║    \    ║    \════╝    `|4
-`o        \║        \╚════    \         \         `|5
-`o   ╔════\    ║    \    ║    \         \         `|6
-`o        \         \    ════╗\        ║\        ║`|7
+`o═══╗    <br />    ║    <br />    ║    <br />         <br />         `|0(optional)
+`o       ║<br />        ║<br />    ════╝<br />         <br />         `|1
+`o        <br />         <br />    ║    <br />    ║    <br />    ╚════`|2
+`o        <br />         <br />╔════    <br />║        <br />║        `|3
+`o        <br />         <br />    ║    <br />    ║    <br />════╝    `|4
+`o        <br />║        <br />╚════    <br />         <br />         `|5
+`o   ╔════<br />    ║    <br />    ║    <br />         <br />         `|6
+`o        <br />         <br />    ════╗<br />        ║<br />        ║`|7
 
 Each face may also be symmetric in some way, below is an look up table. This need to be configured in mainv3.
 
 shape|symmetry type
 ---------|---
-`o═══╗    \    ║    \    ║    \         \         `|no_symmetry
-`════╗   ║\    ║   ║\╔═══╬═══╝\║   ║    \║   ╚════`|rot_by_four_fold\(please don't cancel me)\(this is not the symbol)
-`════╗    \    ║    \    ║    \    ║    \    ╚════`|rot_by_two_fold
-`o═══╦════\    ║    \    ║    \         \         `|ref_by_y
-`o═══╗    \    ║    \    ║    \    ║    \════╝    `|ref_by_x
-`o═══╗    \    ║    \    ╚═══╗\        ║\        ║`|ref_by_minor
-`o═══╗    \║   ║    \╚═══╝    \         \         `|ref_by_major
-`o═══╦════\    ║    \    ║    \    ║    \════╩════`|ref_orth
-`o═══╗    \║   ║    \╚═══╬═══╗\    ║   ║\    ╚═══╝`|ref_diag
-`o═══╦═══╗\║   ║   ║\╠═══╬═══╣\║   ║   ║\╚═══╩═══╝`|all_symmetry
+`o═══╗    <br />    ║    <br />    ║    <br />         <br />         `|no_symmetry
+`════╗   ║<br />    ║   ║<br />╔═══╬═══╝<br />║   ║    <br />║   ╚════`|rot_by_four_fold<br />(please don't cancel me)<br />(this is not the symbol)
+`════╗    <br />    ║    <br />    ║    <br />    ║    <br />    ╚════`|rot_by_two_fold
+`o═══╦════<br />    ║    <br />    ║    <br />         <br />         `|ref_by_y
+`o═══╗    <br />    ║    <br />    ║    <br />    ║    <br />════╝    `|ref_by_x
+`o═══╗    <br />    ║    <br />    ╚═══╗<br />        ║<br />        ║`|ref_by_minor
+`o═══╗    <br />║   ║    <br />╚═══╝    <br />         <br />         `|ref_by_major
+`o═══╦════<br />    ║    <br />    ║    <br />    ║    <br />════╩════`|ref_orth
+`o═══╗    <br />║   ║    <br />╚═══╬═══╗<br />    ║   ║<br />    ╚═══╝`|ref_diag
+`o═══╦═══╗<br />║   ║   ║<br />╠═══╬═══╣<br />║   ║   ║<br />╚═══╩═══╝`|all_symmetry
  
 ## how to run the code
 run with
