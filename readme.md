@@ -33,9 +33,7 @@ then,
 orientation|state number
 ---------|---
 o═══╗    <br>    ║    <br>    ║    <br>         <br>         |0(optional)
----------|---
 o       ║<br>        ║<br>    ════╝<br>         <br>         |1
----------|---
 o        |2
          |
     ║    |
