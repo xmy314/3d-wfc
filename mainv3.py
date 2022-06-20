@@ -4,12 +4,12 @@ import numpy as np
 
 from obj_loader import read_obj, write_obj
 from symmetry_generation_3 import SymmetryGroup, Cube,Face
-from wfc_solver import solveWFC
+from wfc_solver import solveWFC,extendConstraints
 
 from datetime import datetime
 
 
-collapse_count=100
+collapse_count=500
 
 symmetry_of_label={
     "c":SymmetryGroup.ref_orth,
@@ -58,21 +58,31 @@ for mesh_id,module_filename in enumerate(module_filenames):
 
 
 # generate very local constraints that can be determined by only comparing the faces.
-all_module_set=set(range(len(modules)))
-raw_constraints={}
-for module_a_id, module_a in enumerate(modules):
-    raw_constraints[module_a_id]={}
+import pickle
 
-    for module_b_id, module_b in enumerate(modules):
+# all_module_set=set(range(len(modules)))
+# raw_constraints={}
+# for module_a_id, module_a in enumerate(modules):
+#     raw_constraints[module_a_id]={}
 
-        for b_rel_a,compared_faces in [((1,0,0),(0,3)),((0,1,0),(1,4)),((0,0,1),(2,5))]:
-            if not Face.match(module_a.faces[compared_faces[0]],module_b.faces[compared_faces[1]]):
-                if not b_rel_a in raw_constraints[module_a_id]:
-                    raw_constraints[module_a_id][b_rel_a] = all_module_set.copy()
-                raw_constraints[module_a_id][b_rel_a].remove(module_b_id)
+#     for module_b_id, module_b in enumerate(modules):
+
+#         for b_rel_a,compared_faces in [((1,0,0),(0,3)),((0,1,0),(1,4)),((0,0,1),(2,5))]:
+#             if not Face.match(module_a.faces[compared_faces[0]],module_b.faces[compared_faces[1]]):
+#                 if not b_rel_a in raw_constraints[module_a_id]:
+#                     raw_constraints[module_a_id][b_rel_a] = all_module_set.copy()
+#                 raw_constraints[module_a_id][b_rel_a].remove(module_b_id)
+
+# extended_constraints=extendConstraints(raw_constraints,all_module_set,(0,0,0))
+
+# with open('saved_dictionary.pkl', 'wb') as f:
+#     pickle.dump(extended_constraints, f)
+
+with open('saved_dictionary.pkl', 'rb') as f:
+    extended_constraints = pickle.load(f)
 
 # pass these constraints into the solver to have it solved
-arena=solveWFC(raw_constraints,collapse_count)
+arena=solveWFC(extended_constraints,collapse_count,True)
 # render/generate a combined mesh for the result.
 result_verts=[]
 result_faces=[]

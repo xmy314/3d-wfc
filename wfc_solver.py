@@ -144,7 +144,24 @@ def extendConstraints(raw_constraints,all_structure_set,origin):
 
     return extended_constraints
 
-def solveWFC(raw_constraints,termination_count=1000):
+def roll_back(arena,change_record,step_record):
+    while True:
+        if len(change_record)==0:
+            print("rolling back further than history allows")
+            raise Exception
+
+        to_roll_back = change_record.pop()
+        for key in to_roll_back:
+            arena[key].update(to_roll_back[key])
+        
+        # remove the step since it wouldn't work in this situation
+        roll_back_position,roll_back_selection = step_record.pop()
+
+        arena[roll_back_position].remove(roll_back_selection)
+        if len(arena[roll_back_position])!=0:
+            return
+
+def solveWFC(raw_constraints,termination_count=1000,constraints_extended=False):
 
     #intiation
     origin=None
@@ -156,8 +173,10 @@ def solveWFC(raw_constraints,termination_count=1000):
             break
     
     all_structure_set = set(raw_constraints.keys())
- 
-    extended_constraints = extendConstraints(raw_constraints,all_structure_set,origin)
+    if not constraints_extended:
+        extended_constraints = extendConstraints(raw_constraints,all_structure_set,origin)
+    else:
+        extended_constraints=raw_constraints
 
     arena={}
     arena[origin]=all_structure_set.copy()
@@ -166,11 +185,8 @@ def solveWFC(raw_constraints,termination_count=1000):
     change_record=[{}]
     step_record=[]
     from alive_progress import alive_bar
-    with alive_bar(termination_count, title='Processing', length=40,calibrate=50, bar='smooth',manual=True)  as bar:
+    with alive_bar(termination_count, title='Processing', length=40,calibrate=100, bar='smooth',manual=True)  as bar:
         while True:
-            if len(change_record)==0:
-                print("rolling back further than history allows")
-                raise Exception
             position_to_set=None
             lowest_entropy=len(all_structure_set)
             collapsed_count = 0
@@ -196,17 +212,8 @@ def solveWFC(raw_constraints,termination_count=1000):
             while True:
                 if len(possibilities)==0:
                     # if nothing can be used, rewind the changes made from the last step
-                    to_roll_back = change_record.pop()
-                    for key in to_roll_back:
-                        arena[key].update(to_roll_back[key])
-                    
-                    # remove the step since it wouldn't work in this situation
-                    roll_back_position,roll_back_selection = step_record.pop()
-                    arena[roll_back_position].remove(roll_back_selection)
-
-                    print(f"roll back {roll_back_position}")
+                    roll_back(arena,change_record,step_record)
                     break
-
 
                 # select a possibility
                 choosen_possibility=choice(possibilities)
