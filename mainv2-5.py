@@ -29,7 +29,7 @@ def combine(bg,fg,fg_off):
     # set adjusted alpha and denormalize back to 0-255
     bg[fg_off[0]:fg_off[0]+fg.shape[0],fg_off[1]:fg_off[1]+fg.shape[1],3] = (1 - (1 - abg) * (1 - afg)) * 255
 
-def drawArena(arena,sprite_sheet,sprite_id,sprite_sheet_column_count,sprite_sheet_square_size,path="output",name=""):
+def drawArena(arena,sprite_sheet,sprite_id,sprite_sheet_column_count,sprite_sheet_square_size,path="output2",name=""):
     if name=="":
         time=datetime.now().strftime("%Y-%m-%d-%H-%M-%S")
         name = f"{time}.png"

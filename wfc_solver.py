@@ -154,76 +154,77 @@ def solveWFC(raw_constraints,termination_count=1000):
     # below starts actual computation
     change_record=[{}]
     step_record=[]
-    while True:
-        if len(change_record)==0:
-            print("rolling back further than history allows")
-            raise Exception
-        position_to_set=None
-        lowest_entropy=len(all_structure_set)
-        collapsed_count = 0
-        for position in arena:
-            possibilities = arena[position]
-
-            entropy = log2(len(possibilities))
-
-            if entropy==0:
-                collapsed_count+=1
-            else:
-                if entropy<lowest_entropy:
-                    position_to_set=position
-                    lowest_entropy=entropy
-        
-        #region progress bar
-        TEMPSTR="#"*(50*collapsed_count//termination_count)
-        print(f"\033[2J[{TEMPSTR:50}] {100*collapsed_count/termination_count:.1f}%")
-        #endregion
-
-        if(position_to_set==None or collapsed_count>=termination_count):
-            print("eyyyy solved")
-            break
-                
-        possibilities=list(arena[position_to_set])
+    from alive_progress import alive_bar
+    with alive_bar(termination_count, title='Processing', length=40,calibrate=50, bar='smooth',manual=True)  as bar:
         while True:
-            if len(possibilities)==0:
-                # if nothing can be used, rewind the changes made from the last step
-                to_roll_back = change_record.pop()
-                for key in to_roll_back:
-                    arena[key].update(to_roll_back[key])
-                
-                # remove the step since it wouldn't work in this situation
-                roll_back_position,roll_back_selection = step_record.pop()
-                arena[roll_back_position].remove(roll_back_selection)
-                break
+            if len(change_record)==0:
+                print("rolling back further than history allows")
+                raise Exception
+            position_to_set=None
+            lowest_entropy=len(all_structure_set)
+            collapsed_count = 0
+            for position in arena:
+                possibilities = arena[position]
 
+                entropy = log2(len(possibilities))
 
-            # select a possibility
-            choosen_possibility=choice(possibilities)
-
-            # remove the possibility from current iteration
-            possibilities.remove(choosen_possibility)
+                if entropy==0:
+                    collapsed_count+=1
+                else:
+                    if entropy<lowest_entropy:
+                        position_to_set=position
+                        lowest_entropy=entropy
             
-            # record the change for rewinding
-            if not position_to_set in change_record[-1]:
-                change_record[-1][position_to_set]=set()
-            change_record[-1][position_to_set].add(choosen_possibility)
+            bar(collapsed_count/termination_count)
 
-            # propagate the effect of this change out
-            (suc,change)=propagate(arena,extended_constraints,all_structure_set,position_to_set,choosen_possibility)
-
-            if suc:
-                # when it is rewind past this point, this possibility doessn't work and would need to be removed
-                # so record it for whent that time comes
-                step_record.append((position_to_set,choosen_possibility))
-                # the selected possibility does work, at least for this step
-                # save enough information for rewind
-                change_record.append(change)
-                # saveDebugArena(arena)
+            if(position_to_set==None or collapsed_count>=termination_count):
+                print("eyyyy solved")
                 break
-            else:
-                # this possibility doesn't work in this situation, remove it
-                arena[position_to_set].remove(choosen_possibility)
-                # the selected possibility doesn't work out, rewind and try other possibilities
-                # rewind should have been done inside of propagate
-                continue
+                    
+            possibilities=list(arena[position_to_set])
+            while True:
+                if len(possibilities)==0:
+                    # if nothing can be used, rewind the changes made from the last step
+                    to_roll_back = change_record.pop()
+                    for key in to_roll_back:
+                        arena[key].update(to_roll_back[key])
+                    
+                    # remove the step since it wouldn't work in this situation
+                    roll_back_position,roll_back_selection = step_record.pop()
+                    arena[roll_back_position].remove(roll_back_selection)
+
+                    print(f"roll back {roll_back_position}")
+                    break
+
+
+                # select a possibility
+                choosen_possibility=choice(possibilities)
+
+                # remove the possibility from current iteration
+                possibilities.remove(choosen_possibility)
+                
+                # record the change for rewinding
+                if not position_to_set in change_record[-1]:
+                    change_record[-1][position_to_set]=set()
+                change_record[-1][position_to_set].add(choosen_possibility)
+
+                # propagate the effect of this change out
+                (suc,change)=propagate(arena,extended_constraints,all_structure_set,position_to_set,choosen_possibility)
+
+                if suc:
+                    # when it is rewind past this point, this possibility doessn't work and would need to be removed
+                    # so record it for whent that time comes
+                    step_record.append((position_to_set,choosen_possibility))
+                    # the selected possibility does work, at least for this step
+                    # save enough information for rewind
+                    change_record.append(change)
+                    # saveDebugArena(arena)
+                    break
+                else:
+                    # this possibility doesn't work in this situation, remove it
+                    arena[position_to_set].remove(choosen_possibility)
+                    # the selected possibility doesn't work out, rewind and try other possibilities
+                    # rewind should have been done inside of propagate
+                    continue
 
     return arena

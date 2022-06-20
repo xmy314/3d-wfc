@@ -1,10 +1,10 @@
-from symmetry_generation_3 import SymmetryGroup, Cube,Face
-from wfc_solver import solveWFC
 import os
 from os import path
-from math import log2
 import numpy as np
+
 from obj_loader import read_obj, write_obj
+from symmetry_generation_3 import SymmetryGroup, Cube,Face
+from wfc_solver import solveWFC
 
 from datetime import datetime
 
@@ -108,6 +108,9 @@ for position in arena:
     result_verts+=transformed_verts.T.tolist()
     result_faces+=[[v+id_off_set for v in face[::loop_direction]] for face in faces_at_position]
 
-write_obj(f"{starting_time}-{collapse_count}.obj",(result_verts,result_faces))
+outputh_path="output3"
+output_name=f"{starting_time}-{collapse_count}.obj"
+
+write_obj(path.join(outputh_path,output_name),(result_verts,result_faces))
 
 # snakeviz /tmp/tmp.prof

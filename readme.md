@@ -28,7 +28,7 @@ In case when a face is like the folloing where "o" is the origin.<br>
 The orientation and state number can be seen from the following table.
 
 orientation|state number
----------|---
+---|---
 `o═══╗    `<br>`    ║    `<br>`    ║    `<br>`         `<br>`         `|0(optional)
 `o       ║`<br>`        ║`<br>`    ════╝`<br>`         `<br>`         `|1
 `o        `<br>`         `<br>`    ║    `<br>`    ║    `<br>`    ╚════`|2
@@ -41,7 +41,7 @@ orientation|state number
 Each face may also be symmetric in some way, below is a look up table. This need to be configured for each face name in mainv3.
 
 shape|symmetry type
----------|---
+---|---
 `o═══╗    `<br>`    ║    `<br>`    ║    `<br>`         `<br>`         `|no_symmetry
 `════╗   ║`<br>`    ║   ║`<br>`╔═══╬═══╝`<br>`║   ║    `<br>`║   ╚════`|rot_by_four_fold<br>(please don't cancel me)<br>(this is not the symbol)
 `════╗    `<br>`    ║    `<br>`    ║    `<br>`    ║    `<br>`    ╚════`|rot_by_two_fold
@@ -68,5 +68,5 @@ visualizing profiling result with:
 ```
 
 ## other stuff:
-    symmetry_generation_2 doesn't work.
+symmetry_generation_2 doesn't work.
 
