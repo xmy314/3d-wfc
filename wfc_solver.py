@@ -2,10 +2,21 @@ import operator
 from math import log2
 from random import choice
 
+def add_vectorn(a,b):
+    return tuple(map(operator.add ,a,b ))
+
+def add_vector3(a,b):
+    return (a[0]+b[0],a[1]+b[1],a[2]+b[2])
+
 # main wfc functions
 def checkValidity(arena,constraints,position,structure,change):
+    if len(position)==3:
+        add_func=add_vector3
+    else:
+        add_func=add_vectorn
+
     for offset_key in constraints[structure]:
-        n_position=tuple(map(operator.add ,position,offset_key ))
+        n_position = add_func(position,offset_key)
 
         if (not n_position in change):
             # not changed + was good => still good

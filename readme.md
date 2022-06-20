@@ -70,3 +70,12 @@ visualizing profiling result with:
 ## other stuff:
 symmetry_generation_2 doesn't work.
 
+this currently have a three step look ahead baked in.
+
+updating constraints whenever something changes is a step look ahead.
+checkvalidity is one step look ahead when that is present.
+propagate uses check validity is another step look ahead.
+
+this reduces the number of back propagation to extremely low, but it also couldn't really be sped fast or to apply alpha beta trimming.
+
+maybe another way that focuses on using back propagation would be more valuable?

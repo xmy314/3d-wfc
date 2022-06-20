@@ -9,7 +9,7 @@ from wfc_solver import solveWFC
 from datetime import datetime
 
 
-collapse_count=2000
+collapse_count=100
 
 symmetry_of_label={
     "c":SymmetryGroup.ref_orth,
