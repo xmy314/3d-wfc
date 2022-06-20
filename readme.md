@@ -23,11 +23,11 @@ The third lowest bit is reflection and fliping all the bits is reflection along 
 
 eg:
 If a face is like the folloing where "o" is the origin
-o═══╗    
-    ║    
-    ║    
-         
-          
+o═══╗    
+    ║    
+    ║    
+         
+         
 then,
 
 orientation|state number
@@ -43,7 +43,7 @@ o        <br>         <br>    ════╗<br>     
 
 Each face may also be symmetric in some way, below is an look up table. This need to be configured in mainv3.
 
-orientation|state number
+shape|symmetry type
 ---------|---
 o═══╗    <br>    ║    <br>    ║    <br>         <br>         |no_symmetry
 ════╗   ║<br>    ║   ║<br>╔═══╬═══╝<br>║   ║    <br>║   ╚════|rot_by_four_fold<br>(please don't cancel me)<br>(this is not the symbol)
