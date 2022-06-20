@@ -9,3 +9,4 @@ output/
 *.obj
 log.txt
 *.pkl
+lab.*
