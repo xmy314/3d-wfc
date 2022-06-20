@@ -22,10 +22,10 @@ The two lower bits represents clockwise rotation and adding 1 is a clockwise rot
 The third lowest bit is reflection and fliping all the bits is reflection along the diagonal that doesn't contain the origin.
 
 eg:
-In case when a face is like the folloing where "o" is the origin.
+In case when a face is like the folloing where "o" is the origin.<br>
 `o═══╗    `<br>`    ║    `<br>`    ║    `<br>`         `<br>`         `
 
-the orientation and state number can be seen from the following
+The orientation and state number can be seen from the following table.
 
 orientation|state number
 ---------|---
@@ -38,7 +38,7 @@ orientation|state number
 `o   ╔════`<br>`    ║    `<br>`    ║    `<br>`         `<br>`         `|6
 `o        `<br>`         `<br>`    ════╗`<br>`        ║`<br>`        ║`|7
 
-Each face may also be symmetric in some way, below is an look up table. This need to be configured in mainv3.
+Each face may also be symmetric in some way, below is a look up table. This need to be configured for each face name in mainv3.
 
 shape|symmetry type
 ---------|---
